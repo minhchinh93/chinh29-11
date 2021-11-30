@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\auth\logincontroller;
+use App\Http\Controllers\auth\regitercontroller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,5 +33,25 @@ Route::get('/shop', function () {
 });
 Route::get('/cart', function () {
 
-    return view('client.blog.contacUs');
+    return view('auth.body.register');
 });
+Route::get('/auth', function () {
+
+    return view('auth.index');
+});
+
+//phan auth
+Route::prefix('auth')->group(function () {
+    //dang ky
+    Route::post('/regiter',[regitercontroller::class,'create'])->name('auth.regiter');
+    //dang nhap
+    Route::post('/login',[logincontroller::class,'login'])->name('auth.login');
+
+});
+
+
+
+
+// Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
