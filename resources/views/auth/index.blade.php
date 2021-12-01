@@ -6,6 +6,15 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
+            @if (session('success'))
+            <div class="alert alert-success " role="alert">
+                    {{  session('success') }}
+            </div>
+            @elseif (session('erros'))
+            <div class="alert alert-erros " role="alert">
+                {{ session('erros') }}
+           </div>
+            @endif
             <form class="login100-form validate-form" method="POST" action="{{ route('auth.login') }}">
                 @csrf
                 <span class="login100-form-title p-b-26">
@@ -42,7 +51,7 @@
 							Don’t have an account?
 						</span>
 
-                    <a class="txt2" href="#">
+                    <a class="txt2" href="{{ route('register.index') }}">
 							Sign Up
 						</a>
                 </div>
@@ -51,7 +60,7 @@
 							Don’t remember password?
 						</span>
 
-                    <a class="txt2" href="#">
+                    <a class="txt2" href="{{ route('email.index') }}">
 							get password
 						</a>
                 </div>

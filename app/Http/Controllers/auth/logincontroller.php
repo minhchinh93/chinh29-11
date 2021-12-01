@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\regmail;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+// use App\Http\Requests\UserRequest;
+
 
 
 class LoginController extends Controller
@@ -40,20 +44,30 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function index(){
+        return view('auth.index');
+    }
+    
     public function login(Request $request){
+
+        if (Auth::attempt($request->only('email', 'password'))) {
+
+
+
+        }
+            return redirect()->back()->with('message', 'Login failed!');
+
 
         // dd(__Method__);
         // dd($request->all());
         // dd(__Methot__);
-        // $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
         // dd("_")
 
         // dd($credentials);
 
-        if(Auth::attempt($request->only( 'password'))){
-            dd(Auth::user());
-        }else {
-            return 'ok';
-        }
+        dd(Auth::attempt($credentials));
+
     }
 }

@@ -8,7 +8,8 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-            <form class="login100-form validate-form">
+            <form class="login100-form validate-form" method="POST" action="{{ route('checkmail') }}">
+                @csrf
                 <span class="login100-form-title p-b-26">
 						Welcome
 					</span>
@@ -35,7 +36,7 @@
 							Don’t have an account?
 						</span>
 
-                    <a class="txt2" href="#">
+                    <a class="txt2" href="{{ route('login') }}">
 							Sign Up
 						</a>
                 </div>
