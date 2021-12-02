@@ -4,6 +4,15 @@
 
 <div class="content">
     <div class="container-fluid">
+        @if (session('success'))
+        <div class="alert alert-success " role="alert">
+                {{  session('success') }}
+        </div>
+        @elseif (session('erros'))
+        <div class="alert alert-erros " role="alert">
+            {{ session('erros') }}
+       </div>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -17,63 +26,32 @@
                                 <th>ID</th>
                                 <th>NAME</th>
                                 <th>EMAIL</th>
-                                <th>TOTAL PAYMENT</th>
                                 <th>ROLE</th>
+                                <th>Ghi chus</th>
                                 <th>ACTION</th>
                                 <
                             </thead>
                             <tbody>
+                                @php
+                                    $i=0
+                                @endphp
+                                @foreach ($shows as $show )
+                                @php
+                                    $i++
+                                 @endphp
+
                                 <tr>
-                                    <td>1</td>
-                                    <td>Dakota dog</td>
-                                    <td>ccc@gmail.com</td>
-                                    <td>20,0000,000 đ</td>
-                                    <td>Admin</td>
-                                    <td>SUA|XOA</td>
+                                    <td>{{ $i }}</td>
+                                    <td>{{ $show->name }}</td>
+                                    <td>{{ $show->email }}</td>
+                                    <td>{{ $show->role ==  1 ? 'customer' : 'admin'; }} </td>
+                                    <td>note</td>
+                                    <td><a class=" w-75 " href="{{ route('update.show',[$show->id]) }}"><i class="pe-7s-note mr-2"></i></a>|<a href="{{ route('deleteUser',[$show->id]) }}"><i class="pe-7s-trash text-danger"></i></a></td>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Dakota cat</td>
-                                    <td>bbb@gmail.com</td>
-                                    <td>20,0000,000 đ</td>
-                                    <td>editor</td>
-                                    <td>SUA|XOA</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Dakota Rice</td>
-                                    <td>AAA@gmail.com</td>
-                                    <td>20,0000,000 đ</td>
-                                    <td>customer</td>
-                                    <td>SUA|XOA</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Dakota Rice</td>
-                                    <td>AAA@gmail.com</td>
-                                    <td>20,0000,000 đ</td>
-                                    <td>customer</td>
-                                    <td>SUA|XOA</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Dakota Rice</td>
-                                    <td>AAA@gmail.com</td>
-                                    <td>20,0000,000 đ</td>
-                                    <td>customer</td>
-                                    <td>SUA|XOA</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Dakota Rice</td>
-                                    <td>AAA@gmail.com</td>
-                                    <td>20,0000,000 đ</td>
-                                    <td>customer</td>
-                                    <td>SUA|XOA</td>
-                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
-
+=
                     </div>
                 </div>
             </div>

@@ -40,34 +40,31 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('guest')->except('logout');
+    // }
 
     public function index(){
         return view('auth.index');
     }
-    
+
     public function login(Request $request){
 
         if (Auth::attempt($request->only('email', 'password'))) {
 
+            return redirect()->route('showList')->with('success',' success login !') ;
 
-
+        } else{
+            return redirect()->back()->with(' erros ', 'Login failed!');
         }
-            return redirect()->back()->with('message', 'Login failed!');
-
-
-        // dd(__Method__);
-        // dd($request->all());
-        // dd(__Methot__);
-        $credentials = $request->only('email', 'password');
-        // dd("_")
-
-        // dd($credentials);
-
-        dd(Auth::attempt($credentials));
-
     }
+
+    public function logout(){
+        if(Auth::check()){
+            Auth::logout();
+            return redirect()->route('login');
+        }
+    }
+
 }

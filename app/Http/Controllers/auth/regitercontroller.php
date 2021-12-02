@@ -19,7 +19,7 @@ class regitercontroller extends Controller
     public function create(UserRequest $request)
     {
     //ma hoa token
-    $remember_token= bcrypt($request->name.time());
+    $remember_token= md5($request->name.time());
     $url = route('senmail',[$remember_token]);
     // lay du lieu
     $data=[

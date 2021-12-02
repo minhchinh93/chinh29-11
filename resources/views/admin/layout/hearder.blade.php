@@ -166,7 +166,7 @@
                               </ul>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="{{ route('logout') }}">
                                 <p>Log out</p>
                             </a>
                         </li>

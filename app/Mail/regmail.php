@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Http\Request;
 
 class regmail extends Mailable
 {
@@ -28,9 +29,11 @@ class regmail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(Request $request)
     {
         return $this->view('mail')
+                    ->from('teamAmato@gmail.com','nguyen minh chinh')
+                    ->subject('[code] thư xác nhận tài khoản' )
                     ->with($this->input);
     }
 }

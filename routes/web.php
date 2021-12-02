@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\userController;
 use App\Http\Controllers\auth\logincontroller;
 use App\Http\Controllers\auth\regitercontroller;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ConfirmPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Models\User;
+use App\Http\Middleware\checkadmin;
+use App\Http\Controllers\auth\sendMailController;
+use App\Http\Controllers\Client\homeController;
 
 
 /*
@@ -21,28 +26,15 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
-// });
+//     User::create([
 
-// Route::get('/index', function () {
-
-//     return view('admin.users.index');
-// });
-// Route::get('/client', function () {
-
-//     return view('client.index');
-// });
-// Route::get('/shop', function () {
-
-//     return view('client.shop.checkout');
-// });
-// Route::get('/cart', function () {
-
-//     return view('auth.body.register');
-// });
-// Route::get('/auth', function () {
-
-//     return view('auth.index');
+//             'name'=> 'nguyen minh chinh',
+//             'email'=> 'ccccc@gmail.com',
+//             'phone'=> '09343332222',
+//             'password'=> bcrypt('123@@@'),
+//             // 'remember_token'=> $remember_token,
+//             'role'=> 3
+//     ]);
 // });
 
 Auth::routes();
@@ -51,9 +43,10 @@ Auth::routes();
 Route::prefix('auth')->group(function () {
 
   //========= khoi dang ky========//
-    // show register mail
+    // show register mailsendMail
     Route::get('/regiter/index',[regitercontroller::class,'index'])->name('register.index');
    // nhapj du lieu + gui mail
+
     Route::post('/regiter',[regitercontroller::class,'create'])->name('auth.regiter');
   //========= khoi very mail user========//
    //verry mail
@@ -63,6 +56,8 @@ Route::prefix('auth')->group(function () {
     Route::get('/login',[loginController::class,'index'])->name('login');
     //dang nhap
     Route::post('/login',[logincontroller::class,'login'])->name('auth.login');
+    // dang xuat
+    Route::get('/logout',[logincontroller::class,'logout'])->name('logout');
   // =========== quen pass ==============//
     //show confirm email
     Route::get('/email',[ForgotPasswordController::class,'forgotpass'])->name('email.index');
@@ -71,8 +66,8 @@ Route::prefix('auth')->group(function () {
     //show template comfimg passs
     Route::get('/sendMailChangepass/{email}',[ResetPasswordController::class,'sendMailChangepass'])->name('sendMailChangepass');
     Route::post('/changePasss/{email}',[ResetPasswordController::class,'changePass'])->name('changePass');
-
-
+    // ham send mail
+    Route::get('sendMail',[sendMailController::class,'senmail'])->middleware('verymail')->name('');
 });
     //======== khối thông báo ===========//
 
@@ -81,10 +76,36 @@ Route::prefix('auth')->group(function () {
     return view('auth.layout.alert');
 })->name('alert');
 
+//=========== khoi admin================//
+//============khoi admin user===========//
+
+Route::middleware('checkadmin')->prefix('admin')->group(function () {
+    //logout
+    Route::get('/logout',[homeController::class,'logout'])->name('auth.logout');
+    // show liss user
+    Route::get('/listUser',[userController::class,'index'])->name('showList');
+    // xoa user
+    Route::get('/deleteUser/{id}',[userController::class,'delete'])->name('deleteUser');
+    //show updatenUser
+    Route::get('update/show/{id}',[userController::class,'updateshow'])->name('update.show');
+});
+//==========ket thuc khoi user=========//
 
 
 
 
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//========khet thuc khoi admin========//
+
+
+//========khoi client===========//
+
+//========khoi index===========//
+Route::prefix('/clients')->group(function () {
+    Route::get('/index',[homeController::class,'index'])->name('home');
+});
+
+
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
