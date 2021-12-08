@@ -12,30 +12,31 @@
                         <h4 class="title">Edit Profile</h4>
                     </div>
                     <div class="content">
-                        <form>
+                        <form method="post" action="{{ route('updatesuser',[$show->id]) }}">
+                            @csrf
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input type="text" class="form-control" name='name' disabled="" placeholder="Company" value="{{ $show->name }}">
+                                        <input type="text" class="form-control" name="name" placeholder="Company" value="{{ $show->name }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>email</label>
-                                        <input type="text" class="form-control" name='email' disabled="" placeholder="Company" value="{{ $show->email }}">
+                                        <input type="text" class="form-control" name="email"  placeholder="Company" value="{{ $show->email }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>phone</label>
-                                        <input type="text" class="form-control" name='phone' disabled="" placeholder="Company" value="{{ $show->phome }}">
+                                        <input type="text" class="form-control" name="phone"  placeholder="Company" value="{{ $show->phone }}">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label>role</label>
-                                        <input type="text" class="form-control" name='role' disabled="" placeholder="Company" value="{{ $show->role }}">
+                                        <input type="text" class="form-control" name="role"  disabled="" placeholder="Company" value="{{ $show->role== 3 ? 'admin' : 'customer' }}">
                                     </div>
                                 </div>
                         </div>
@@ -57,13 +58,13 @@
                             <img class="avatar border-gray" src="{{ asset('assets/assets/img/faces/face-3.jpg') }}" alt="...">
 
                               <h4 class="title">{{ $show->name }}<br>
-                                 <small>{{ $show->email }}</small>
+                                 <small>{{ $show->email  }}</small>
                               </h4>
                             </a>
                         </div>
                         <p class="description text-center"> "{{ $show->phone }}<br>
-                            {{ $show->role }} <br>
-                                            
+                            {{ $show->role ==3 ? 'amdin': 'customer' }} <br>
+
                         </p>
                     </div>
                     <hr>

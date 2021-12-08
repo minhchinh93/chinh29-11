@@ -7,32 +7,25 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\category;
+use App\Models\product;
 
 class homeController extends Controller
 {
     //
     public function index()
     {
-        // dd(Auth::check());
-         if(Auth::check()){
             $data= Auth::user();
-            //  $data=[
-            //      'email'=>Auth::user()->email,
-            //      'name'=>Auth::user()->name,
-            //      'address'=>Auth::user()->address,
-            //      'address'=>Auth::user()->phone,
-            //  ];
-                  return view('client.index',['data'=>$data]);
-         }
-        }
-         public function logout(){
+            $menu= Category::all();
+            $product= product::all();
+            return view('client.index',['data'=>$data, 'menus'=>$menu,'product'=>$product]);
+    }
+    public function logout(){
+            Auth::logout();
+            $data= Auth::check();
+            return view('client.index',['data'=>$data]);
 
-               Auth::logout();
-                $data= Auth::check();
-            
-                return view('client.index',['data'=>$data]);
-
-        }
+    }
 
     }
 

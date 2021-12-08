@@ -5,9 +5,11 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\regmail;
+use Carbon\Carbon;
 // use App\Mail;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\queueJob;
 use Illuminate\Http\Request;
 
 class regitercontroller extends Controller
@@ -34,10 +36,12 @@ class regitercontroller extends Controller
         'link'=> $url,
         'name'=>$request->name
     ];
-    Mail::to($request->email)->send(new regmail($input));
-
+    $email= $request->email;
+    // send mail queue job
+    $emailJob = (new queueJob( $email, $input))->delay(Carbon::now()->addMinutes(5));
+    dispatch($emailJob);
+    //check tạo user thành công
   if(User::create($data))  {
-
     return redirect()->route('login')->with('success','succset password,check mail in verymail');
         } else{
     return redirect()->route('login')->with('erros','erros password,try login !');

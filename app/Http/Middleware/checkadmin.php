@@ -20,13 +20,14 @@ class checkadmin
     {
 
         if(Auth::check()){
-            if(Auth::user()->role == 3){
+            if(Auth::user()->role == 1){
                 return $next($request);
             }else {
-
                 return redirect()->route('home') ;
             }
-        }
+        }else {
+            return redirect()->route('home') ;
+        }   
 
 
 

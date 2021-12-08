@@ -10,6 +10,6 @@ class sendMailController extends Controller
 {
     //
     public function senmail(){
-        return "da very mail";
+        return "kiem tra tin nhắn mail";
     }
 }
